@@ -1,0 +1,106 @@
+# 微信公众号爬虫配置文件
+# WeChat Account Crawler Configuration
+
+# 数据库配置
+database:
+  host: "127.0.0.1"
+  port: 3306
+  # 远程用户remote_user
+  user: "root"
+  password: "123456"
+  database: "faxuan"
+  table_name: "fx_article_records"
+  crawl_channel_default: "微信公众号"
+
+# 爬取配置
+crawler:
+  # 抓取多少天内的文章
+  # 自然日语义：
+  #  1 => 昨日 00:00:00 起至今天当前时间（含）
+  #  7 => 7天前 00:00:00 起至今天当前时间（含）
+  days_back: 35
+  # 每日账户状态自动重置开关（每天零点将所有账户状态重置为PENDING，便于补偿爬取）
+  daily_status_reset_enabled: true
+
+  # 最大爬取页数
+  max_pages: 100
+  # 每页文章数量
+  articles_per_page: 5
+  # UI自动化刷新次数
+  refresh_count: 3
+  # 请求间隔（秒）
+  min_interval: 10
+  # 最大重试次数
+  max_retries: 3
+  # 请求超时时间（秒）
+  timeout: 30
+  # 公众号之间的延迟（秒）
+  account_delay: 60
+  # 等待抓Cookie超时时间（秒）
+  cookie_wait_timeout: 120
+  # 单篇文章之间随机延迟范围（秒）
+  article_delay_range: [10, 20]
+  # 页面之间随机延迟范围（秒）
+  page_delay_range: [10, 30]
+  # 刷新 x-wechat-key 的最小间隔（秒）
+  min_rekey_interval_sec: 1500
+  # Excel 目标文件路径
+  excel_file: "target_articles.xlsx"
+
+# 文章ID生成配置
+article_id:
+  time_format: "%Y%m%d%H%M"
+  random_digits: 4
+
+# 数据库操作配置
+db_operation:
+  auto_reconnect: true
+  connection_timeout: 30
+  batch_insert_delay: 0.1
+  max_retry_times: 3
+
+# UI自动化配置
+ui_automation:
+  search_timeout: 15
+  click_retry_count: 3
+  wait_after_click: 2
+  max_recursion_depth: 5
+  # 窗口管理配置
+  auto_close_browser_windows: true # 自动关闭微信内置浏览器窗口以防止窗口累积
+  close_windows_between_accounts: true # 在处理不同公众号之间关闭浏览器窗口
+
+# 日志配置
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(levelname)s - %(message)s"
+
+# 代理配置
+proxy:
+  # 代理模式选择: legacy (传统代理) 或 pool (代理池)
+  mode: "legacy"
+
+  # 传统代理配置 (mode = "legacy" 时使用)
+  legacy:
+    # 代理端口配置
+    port: 8080
+    # 代理服务器地址（如果使用外部代理）
+    server: "" # 留空表示使用本地mitmproxy
+    # 代理超时设置
+    timeout: 30
+    # 是否启用代理验证
+    verify_proxy: true
+
+  # 代理池配置 (mode = "pool" 时使用)
+  pool:
+    # 青果代理池配置
+    qg_url: "https://exclusive.proxy.qg.net/get"
+    qg_key: "11B02364"
+    ip_lifetime: 3600 # IP存活时间（秒）
+    refresh_buffer: 10 # 提前刷新缓冲时间（秒）
+    # 重试配置
+    max_retries: 3
+    retry_delay: 5 # 重试延迟（秒）
+    # IP获取超时
+    request_timeout: 10 # 请求超时（秒）
+    # 是否启用代理池
+    enabled: true

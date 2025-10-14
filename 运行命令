@@ -1,0 +1,4 @@
+python loop_crawler.py --once
+
+python loop_crawler.py --interval 1800
+python .\loop_crawler.py --excel .\test1.xlsx --once
