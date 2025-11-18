@@ -4,6 +4,7 @@
 <hr>
 
 >✨现已增加分支：[loop](https://github.com/RichardQt/AutoWechatCrawler/tree/loop) --实现循环爬虫
+> 重要：暂时只支持3.9.12版本的微信！！！！！
 
 ## 📚 文档导航
 
